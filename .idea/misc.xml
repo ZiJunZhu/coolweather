@@ -5,7 +5,15 @@
       <map>
         <entry key="..\:/Project/CoolWeather/app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.1465" />
         <entry key="..\:/Project/CoolWeather/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Project/CoolWeather/app/src/main/res/layout/activity_weather.xml" value="0.12312954253954682" />
+        <entry key="..\:/Project/CoolWeather/app/src/main/res/layout/api.xml" value="0.12312954253954682" />
+        <entry key="..\:/Project/CoolWeather/app/src/main/res/layout/aqi.xml" value="0.12312954253954682" />
         <entry key="..\:/Project/CoolWeather/app/src/main/res/layout/choose_area.xml" value="0.25" />
+        <entry key="..\:/Project/CoolWeather/app/src/main/res/layout/forecast.xml" value="0.12312954253954682" />
+        <entry key="..\:/Project/CoolWeather/app/src/main/res/layout/forecast_item.xml" value="0.12312954253954682" />
+        <entry key="..\:/Project/CoolWeather/app/src/main/res/layout/now.xml" value="0.12312954253954682" />
+        <entry key="..\:/Project/CoolWeather/app/src/main/res/layout/suggestion.xml" value="0.12312954253954682" />
+        <entry key="..\:/Project/CoolWeather/app/src/main/res/layout/title.xml" value="0.12312954253954682" />
       </map>
     </option>
   </component>

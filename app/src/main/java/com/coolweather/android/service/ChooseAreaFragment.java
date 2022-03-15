@@ -3,6 +3,7 @@ package com.coolweather.android.service;
 import static java.security.AccessController.getContext;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.coolweather.android.R;
+import com.coolweather.android.WeatherActivity;
 import com.coolweather.android.db.City;
 import com.coolweather.android.db.County;
 import com.coolweather.android.db.Province;
@@ -97,6 +99,12 @@ public class ChooseAreaFragment extends Fragment {
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(i);
                     queryCounties();
+                }else if (currentLevel == LEVEL_COUNTY){
+                    String weatherId = countyList.get(i).getWeatherId();
+                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                    intent.putExtra("weather_id",weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
@@ -126,6 +134,7 @@ public class ChooseAreaFragment extends Fragment {
         provinceList = LitePal.findAll(Province.class);
         Log.e(TAG, "queryProvinces: 2" );
         if (provinceList.size() > 0){
+            Log.e(TAG, "queryProvinces: 8" );
             dataList.clear();
             for (Province province:provinceList){
                 dataList.add(province.getProvinceName());
@@ -151,7 +160,7 @@ public class ChooseAreaFragment extends Fragment {
                     @Override
                     public void run() {
                         closeProgressDialog();
-                        Log.e(TAG, "queryProvinces: 7" +e);
+                        Log.e(TAG, "queryProvinces: 7");
                         Toast.makeText(getContext(), "加载失败", Toast.LENGTH_SHORT).show();
                     }
                 });
