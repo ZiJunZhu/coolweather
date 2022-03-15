@@ -45,7 +45,7 @@ public class AutoUpdateService extends Service {
     }
 
     private void updateBingPic() {
-        String requestBingPic = "htt[://guolin.tech/api/bing_pic";
+        String requestBingPic = "http://guolin.tech/api/bing_pic";
         HttpUtil.sendOkHttpRequest(requestBingPic, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
