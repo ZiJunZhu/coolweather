@@ -9,7 +9,6 @@ import okhttp3.Request;
 
 public class HttpUtil {
 
-    private static final String TAG = "HttpUtil";
 
     public static void sendOkHttpRequest(String address,okhttp3.Callback callback){
         OkHttpClient client = new OkHttpClient();

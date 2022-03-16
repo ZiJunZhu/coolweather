@@ -27,6 +27,7 @@ import com.coolweather.android.gson.Forecast;
 import com.coolweather.android.gson.Weather;
 import com.coolweather.android.service.AutoUpdateService;
 import com.coolweather.android.util.HttpUtil;
+import com.coolweather.android.util.LogUtil;
 import com.coolweather.android.util.Utility;
 
 import org.w3c.dom.Text;
@@ -69,6 +70,10 @@ public class WeatherActivity extends AppCompatActivity {
 
     private ImageView bingPicImg;
 
+    private Weather weather;
+
+    private String weatherId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,14 +112,11 @@ public class WeatherActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather", null);
         String bingPic = prefs.getString("bing_pic", null);
-        if (bingPic != null) {
-            Glide.with(this).load(bingPic).into(bingPicImg);
-        } else {
-            loadBingPic();
-        }
-        final String weatherId;
+        Glide.with(this).load(bingPic).into(bingPicImg);
+        loadBingPic();
+
         if (weatherString != null) {
-            Weather weather = Utility.handleWeatherResponse(weatherString);
+            weather = Utility.handleWeatherResponse(weatherString);
             weatherId = weather.basic.weatherId;
             showWeatherInfo(weather);
         } else {
@@ -125,6 +127,7 @@ public class WeatherActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                weatherId = weather.basic.weatherId;
                 requestWeather(weatherId);
             }
         });
@@ -155,9 +158,10 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 
-    public void requestWeather(final String weatherId) {
+    public void requestWeather(String weatherId) {
         String weatherUrl = "http://guolin.tech/api/weather?cityid=" +
                 weatherId + "&key=e12457fcbd914e74a38fbd982ec4fbd1";
+        weather.basic.weatherId = weatherId;
         HttpUtil.sendOkHttpRequest(weatherUrl, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -190,6 +194,7 @@ public class WeatherActivity extends AppCompatActivity {
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });
+                loadBingPic();
             }
         });
     }

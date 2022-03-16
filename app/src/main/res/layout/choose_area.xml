@@ -3,19 +3,20 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff">
+    android:background="#FAFAD2">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary">
+        android:layout_marginTop="5dp"
+        android:background="?attr/colorOnPrimary">
 
         <TextView
             android:id="@+id/title_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textColor="#fff"
+            android:textColor="@color/black"
             android:textSize="20sp"/>
 
         <Button
@@ -23,8 +24,9 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
+
             android:background="@drawable/ic_baseline_arrow_back_24"/>
 
     </RelativeLayout>

@@ -32,6 +32,7 @@ import com.coolweather.android.db.City;
 import com.coolweather.android.db.County;
 import com.coolweather.android.db.Province;
 import com.coolweather.android.util.HttpUtil;
+import com.coolweather.android.util.LogUtil;
 import com.coolweather.android.util.Utility;
 
 import org.litepal.LitePal;
@@ -100,7 +101,7 @@ public class ChooseAreaFragment extends Fragment {
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(i);
                     queryCounties();
-                } else if (currentLevel == LEVEL_COUNTY) {
+                } else {
                     String weatherId = countyList.get(i).getWeatherId();
                     if (getActivity() instanceof MainActivity) {
                         Intent intent = new Intent(getActivity(), WeatherActivity.class);
@@ -130,20 +131,11 @@ public class ChooseAreaFragment extends Fragment {
         queryProvinces();
     }
 
-//    @Override
-////    public void onCreate(@Nullable Bundle savedInstanceState) {
-////        super.onCreate(savedInstanceState);
-////
-////    }
-
     private void queryProvinces() {
         titleText.setText("中国");
         backButton.setVisibility(View.GONE);
-        Log.e(TAG, "queryProvinces: 1");
         provinceList = LitePal.findAll(Province.class);
-        Log.e(TAG, "queryProvinces: 2");
         if (provinceList.size() > 0) {
-            Log.e(TAG, "queryProvinces: 8");
             dataList.clear();
             for (Province province : provinceList) {
                 dataList.add(province.getProvinceName());
@@ -152,16 +144,13 @@ public class ChooseAreaFragment extends Fragment {
             listView.setSelection(0);
             currentLevel = LEVEL_PROVINCE;
         } else {
-            Log.e(TAG, "queryProvinces: 3");
             String address = "http://guolin.tech/api/china";
             queryFromServer(address, "province");
         }
     }
 
     private void queryFromServer(String address, String type) {
-        Log.e(TAG, "queryProvinces: 4");
         showProgressDialog();
-        Log.e(TAG, "queryProvinces: 5");
         HttpUtil.sendOkHttpRequest(address, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -169,7 +158,6 @@ public class ChooseAreaFragment extends Fragment {
                     @Override
                     public void run() {
                         closeProgressDialog();
-                        Log.e(TAG, "queryProvinces: 7");
                         Toast.makeText(getContext(), "加载失败", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -177,7 +165,6 @@ public class ChooseAreaFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.e(TAG, "queryProvinces: 6");
                 String responseText = response.body().string();
                 boolean result = false;
                 if ("province".equals(type)) {
@@ -185,7 +172,7 @@ public class ChooseAreaFragment extends Fragment {
                 } else if ("city".equals(type)) {
                     result = Utility.handleCityResponse
                             (responseText, selectedProvince.getId());
-                } else if ("county".equals(type)) {
+                } else {
                     result = Utility.handleCountResponse(responseText, selectedCity.getId());
                 }
                 if (result) {
@@ -197,7 +184,7 @@ public class ChooseAreaFragment extends Fragment {
                                 queryProvinces();
                             } else if ("city".equals(type)) {
                                 queryCities();
-                            } else if ("country".equals(type)) {
+                            } else {
                                 queryCounties();
                             }
                         }
